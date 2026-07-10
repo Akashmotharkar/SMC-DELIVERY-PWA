@@ -8,21 +8,25 @@ const Table = {
 
     editMode: null,
 
-    selectedDate: "",
-
     activeInput: null,
 
-    yesterdayMap: {},
+    customerYesterdayMap: {},
+
+    yesterdayDateStr: "",
+
+    table: null,
 
     headerRow: null,
 
-    tableBody: null,
+    body: null,
 
 
 
     initialize() {
 
         const content = Utils.$("content");
+
+
 
         content.innerHTML = `
 
@@ -44,13 +48,25 @@ const Table = {
 
         `;
 
+
+
+        this.table =
+
+            Utils.$("sales-table");
+
+
+
         this.headerRow =
 
             Utils.$("header-row");
 
-        this.tableBody =
+
+
+        this.body =
 
             Utils.$("table-body");
+
+
 
     },
 
@@ -66,23 +82,45 @@ const Table = {
 
     ) {
 
-        this.headers = headers || [];
+        this.headers =
 
-        this.data = data || [];
+            headers || [];
+
+
+
+        this.data =
+
+            data || [];
+
+
 
         this.customerIDs =
+
             customerIDs || [];
 
-        this.selectedDate =
-            Utils.formatDate(
-                App.selectedDate
-            );
+
+
+        if (!this.table) {
+
+            this.initialize();
+
+        }
+
+
+
+        this.headerRow.innerHTML = "";
+
+
+
+        this.body.innerHTML = "";
+
+
 
         this.buildHeader();
 
-        this.buildRows();
 
-        this.setColumnWidths();
+
+        this.buildRows();
 
     },
 
@@ -90,318 +128,103 @@ const Table = {
 
     buildHeader() {
 
-        this.headerRow.innerHTML = "";
+    const fixedHeaders = [
+
+        "Customer Name",
+
+        "Rate",
+
+        "Balance"
+
+    ];
 
 
 
-        [
+    fixedHeaders.forEach(title => {
 
-            "Customer Name",
+        const th = Utils.create("th");
 
-            "Rate",
+        th.textContent = title;
 
-            "Balance"
+        this.headerRow.appendChild(th);
 
-        ].forEach(text => {
-
-            const th =
-                Utils.create("th");
-
-            th.textContent = text;
-
-            this.headerRow.appendChild(th);
-
-        });
+    });
 
 
 
-        this.headers.forEach(date => {
+    this.headers.forEach(date => {
 
-            const th =
-                Utils.create("th");
-
-
-
-            const day =
-                parseInt(
-
-                    date
-                        .split(" ")[1]
-                        .replace(",", ""),
-
-                    10
-
-                );
+        const th = Utils.create("th");
 
 
 
-            th.textContent = day;
+        const day = parseInt(
+
+            String(date)
+
+                .split(" ")[1]
+
+                .replace(",", ""),
+
+            10
+
+        );
 
 
 
-            if (
+        th.textContent =
 
-                date === this.selectedDate
+            isNaN(day)
 
-            ) {
+                ? date
 
-                th.classList.add(
-
-                    "active-date-cell"
-
-                );
-
-            }
+                : day;
 
 
 
-            this.headerRow
+        if (
 
-                .appendChild(th);
+            Utils.formatDate(
 
-        });
+                App.selectedDate
 
-    },
+            ) === date
+
+        ) {
+
+            th.classList.add(
+
+                "active-date-cell"
+
+            );
+
+        }
+
+
+
+        this.headerRow.appendChild(th);
+
+    });
+
+},
 
 
 
     buildRows() {
 
-        this.tableBody.innerHTML = "";
 
 
-
-        this.data.forEach(
-
-            (
-
-                row,
-
-                rowIndex
-
-            ) => {
-
-                const tr =
-                    this.buildRow(
-
-                        row,
-
-                        rowIndex
-
-                    );
+        // Next Part
 
 
-
-                this.tableBody
-
-                    .appendChild(tr);
-
-            }
-
-        );
 
     },
 
 
 
-    buildRow(
+    setMode(mode) {
 
-        row,
-
-        rowIndex
-
-    ) {
-
-        const tr =
-            Utils.create("tr");
-
-
-
-        tr.dataset.rowType =
-            row[0];
-
-
-
-        row.forEach(
-
-            (
-
-                cell,
-
-                cellIndex
-
-            ) => {
-
-                const td =
-                    this.buildCell(
-
-                        row,
-
-                        rowIndex,
-
-                        cell,
-
-                        cellIndex
-
-                    );
-
-
-
-                tr.appendChild(td);
-
-            }
-
-        );
-
-
-
-        return tr;
-
-    },
-
-
-
-    buildCell(
-
-        row,
-
-        rowIndex,
-
-        cell,
-
-        cellIndex
-
-    ) {
-
-        const td =
-            Utils.create("td");
-
-
-
-        td.textContent =
-            cell || "";
-
-
-
-        return td;
-
-    },
-
-
-
-    setColumnWidths() {
-
-        const rows =
-            this.tableBody
-                .querySelectorAll("tr");
-
-
-
-        for (
-
-            let c = 3;
-
-            c <
-
-            this.headerRow.children.length;
-
-            c++
-
-        ) {
-
-            const th =
-                this.headerRow.children[c];
-
-
-
-            th.style.width =
-                "40px";
-
-
-
-            rows.forEach(row => {
-
-                if (
-
-                    row.cells[c]
-
-                ) {
-
-                    row.cells[c]
-
-                        .style.width =
-                        "40px";
-
-                }
-
-            });
-
-        }
-
-
-
-        if (
-
-            !this.selectedDate
-
-        ) {
-
-            return;
-
-        }
-
-
-
-        const index =
-
-            this.headers.indexOf(
-
-                this.selectedDate
-
-            );
-
-
-
-        if (
-
-            index === -1
-
-        ) {
-
-            return;
-
-        }
-
-
-
-        const column =
-            index + 3;
-
-
-
-        this.headerRow.children[column]
-
-            .style.width =
-            "150px";
-
-
-
-        rows.forEach(row => {
-
-            if (
-
-                row.cells[column]
-
-            ) {
-
-                row.cells[column]
-
-                    .style.width =
-                    "150px";
-
-            }
-
-        });
+        this.editMode = mode;
 
     }
 
