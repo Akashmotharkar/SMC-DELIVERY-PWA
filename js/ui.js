@@ -16,6 +16,16 @@ const UI = {
         this.floatingName =
             Utils.$("floating-customer-name");
 
+        this.floatingButton
+    .addEventListener(
+        "click",
+        () => {
+
+            Table.submit();
+
+        }
+    );
+
     },
 
 
