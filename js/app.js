@@ -42,7 +42,7 @@ const App = {
 
     alert("7");
 
-}
+},
 
 
 
