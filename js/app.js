@@ -14,25 +14,35 @@ const App = {
 
     async initialize() {
 
-        if (this.initialized) {
+    alert("1");
 
-            return;
+    if (this.initialized) return;
 
-        }
+    this.initialized = true;
 
-        this.initialized = true;
+    alert("2");
 
-        Utils.showLoading();
+    Utils.showLoading();
 
-        Auth.initialize();
+    alert("3");
 
-        UI.initialize();
+    Auth.initialize();
 
-        Table.initialize();
+    alert("4");
 
-        await Auth.autoLogin();
+    UI.initialize();
 
-    },
+    alert("5");
+
+    Table.initialize();
+
+    alert("6");
+
+    await Auth.autoLogin();
+
+    alert("7");
+
+}
 
 
 
