@@ -1,0 +1,119 @@
+/* ==========================================================
+   SMALL PHONE
+   ========================================================== */
+
+@media (max-width:480px){
+
+    :root{
+
+        --toolbar-height:56px;
+
+        --name-column-width:120px;
+
+        --rate-column-width:60px;
+
+        --balance-column-width:70px;
+
+        --date-column-width:38px;
+
+        --active-date-width:120px;
+
+        --row-height:40px;
+
+    }
+
+    .login-card{
+
+        padding:20px;
+
+    }
+
+    .app-logo{
+
+        font-size:48px;
+
+    }
+
+}
+
+/* ==========================================================
+   PHONE LANDSCAPE
+   ========================================================== */
+
+@media (orientation:landscape) and (max-height:550px){
+
+    #toolbar{
+
+        height:52px;
+
+    }
+
+    .login-card{
+
+        max-width:460px;
+
+    }
+
+}
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media (min-width:768px){
+
+    :root{
+
+        --name-column-width:180px;
+
+        --active-date-width:180px;
+
+    }
+
+    .login-card{
+
+        max-width:420px;
+
+    }
+
+}
+
+/* ==========================================================
+   DESKTOP
+   ========================================================== */
+
+@media (min-width:1200px){
+
+    body{
+
+        background:#ECEFF1;
+
+    }
+
+    #app-screen{
+
+        max-width:1700px;
+
+        margin:auto;
+
+        box-shadow:0 8px 30px rgba(0,0,0,.12);
+
+    }
+
+}
+
+/* ==========================================================
+   LARGE DESKTOP
+   ========================================================== */
+
+@media (min-width:1700px){
+
+    :root{
+
+        --name-column-width:220px;
+
+        --active-date-width:200px;
+
+    }
+
+}
