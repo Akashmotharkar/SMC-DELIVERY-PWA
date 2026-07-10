@@ -77,6 +77,13 @@ const App = {
 
 
         this.selectedDate = savedDate;
+        this.selectedDateText =
+
+    Utils.formatDate(
+
+        savedDate
+
+    );
 
     },
 
@@ -135,6 +142,13 @@ const App = {
                     this.selectedDate =
 
                         e.target.value;
+                    this.selectedDateText =
+
+    Utils.formatDate(
+
+        this.selectedDate
+
+    );
 
 
 
@@ -230,15 +244,21 @@ const App = {
 
 
 
-        Table.render(
+        if (!Table.table) {
 
-            this.headers,
+    Table.initialize();
 
-            this.data,
+}
 
-            this.customerIDs
+Table.render(
 
-        );
+    this.headers,
+
+    this.data,
+
+    this.customerIDs
+
+);
 
     }
 
