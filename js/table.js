@@ -7,7 +7,7 @@ const Table = {
 
     customerIDs: [],
 
-    editMode: null,
+    editMode: "sales",
 
     activeInput: null,
 
@@ -214,9 +214,7 @@ const Table = {
 
     cellIndex === 1 &&
 
-    this.editMode === "rate" &&
-
-    !App.selectedDate
+    this.editMode === "rate"
 
 ) {
 
@@ -240,9 +238,7 @@ else if (
 
     cellIndex === 2 &&
 
-    this.editMode === "balance" &&
-
-    !App.selectedDate
+    this.editMode === "balance"
 
 ) {
 
@@ -265,14 +261,17 @@ else if (
 else if (
 
     cellIndex >= 3 &&
-
-    this.editMode === "sales" &&
-
-    this.headers[cellIndex - 3] === activeDate &&
-
     !isSummary
-
 ) {
+    console.log({
+        row: rowName,
+        cell: cellIndex,
+        mode: this.editMode,
+        header: this.headers[cellIndex - 3],
+        active: activeDate,
+        summary: isSummary
+    });
+{
 
     const input =
 
