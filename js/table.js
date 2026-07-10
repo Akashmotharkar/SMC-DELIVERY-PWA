@@ -261,29 +261,18 @@ else if (
 else if (
 
     cellIndex >= 3 &&
+    this.editMode === "sales" &&
+    this.headers[cellIndex - 3] === activeDate &&
     !isSummary
+
 ) {
-    console.log({
-        row: rowName,
-        cell: cellIndex,
-        mode: this.editMode,
-        header: this.headers[cellIndex - 3],
-        active: activeDate,
-        summary: isSummary
-    });
 
     const input =
-
         this.createSalesInput(
-
             rowIndex,
-
             rowName,
-
             cell,
-
             cellIndex
-
         );
 
     td.appendChild(input);
