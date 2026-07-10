@@ -239,15 +239,85 @@ const Table = {
 
             else if (
 
-                cellIndex >= 3 &&
+    cellIndex === 1 &&
 
-                this.editMode === "sales" &&
+    this.editMode === "rate" &&
 
-                this.headers[cellIndex - 3] === activeDate &&
+    !App.selectedDate
 
-                !isSummary
+) {
 
-            ) {
+    td.appendChild(
+
+        this.createRateBalanceInput(
+
+            value = cell,
+
+            rowIndex,
+
+            "rate"
+
+        )
+
+    );
+
+}
+
+else if (
+
+    cellIndex === 2 &&
+
+    this.editMode === "balance" &&
+
+    !App.selectedDate
+
+) {
+
+    td.appendChild(
+
+        this.createRateBalanceInput(
+
+            value = cell,
+
+            rowIndex,
+
+            "balance"
+
+        )
+
+    );
+
+}
+
+else if (
+
+    cellIndex >= 3 &&
+
+    this.editMode === "sales" &&
+
+    this.headers[cellIndex - 3] === activeDate &&
+
+    !isSummary
+
+) {
+
+    const input =
+
+        this.createSalesInput(
+
+            rowIndex,
+
+            rowName,
+
+            cell,
+
+            cellIndex
+
+        );
+
+    td.appendChild(input);
+
+}{
 
                 const input =
                     this.createSalesInput(
@@ -386,6 +456,40 @@ buildYesterdayMap() {
         });
 
 },
+
+
+createRateBalanceInput(
+
+    value,
+
+    rowIndex,
+
+    mode
+
+) {
+
+    const input =
+
+        Utils.create("input");
+
+    input.type = "number";
+
+    input.value = value || "";
+
+    input.defaultValue = value || "";
+
+    input.dataset.type = mode;
+
+    input.dataset.customerId =
+
+        this.customerIDs[
+            rowIndex - 4
+        ] || "";
+
+    return input;
+
+},
+
 
 
 createSalesInput(
@@ -850,6 +954,38 @@ collectChanges() {
 
         switch (input.dataset.type) {
 
+                case "rate":
+            
+                updates.rates.push({
+            
+                    customerId:
+            
+                        input.dataset.customerId,
+            
+                    value:
+            
+                        current
+            
+                });
+            
+                break;
+            
+            case "balance":
+            
+                updates.balances.push({
+            
+                    customerId:
+            
+                        input.dataset.customerId,
+            
+                    value:
+            
+                        current
+            
+                });
+            
+                break;
+
             case "sales":
 
                 updates.sales.push({
@@ -972,7 +1108,193 @@ async submit() {
 
 async saveChanges(updates) {
 
-    // Part 9
+    let salesResult = null;
+
+    /* -----------------------------
+           Rate
+        ------------------------------ */
+        
+        if (updates.rates.length) {
+        
+            const result =
+        
+                await API.updateCustomerRates(
+        
+                    updates.rates.map(r => [
+        
+                        r.customerId,
+        
+                        r.value
+        
+                    ])
+        
+                );
+        
+            if (!result.success) {
+        
+                throw new Error(
+        
+                    result.message ||
+        
+                    "Unable to save rates."
+        
+                );
+        
+            }
+        
+        }
+        
+        /* -----------------------------
+           Balance
+        ------------------------------ */
+        
+        if (updates.balances.length) {
+        
+            const result =
+        
+                await API.updateCustomerBalances(
+        
+                    updates.balances.map(r => [
+        
+                        r.customerId,
+        
+                        r.value
+        
+                    ])
+        
+                );
+        
+            if (!result.success) {
+        
+                throw new Error(
+        
+                    result.message ||
+        
+                    "Unable to save balances."
+        
+                );
+        
+            }
+        
+        }
+
+    /* -----------------------------
+       Sales
+    ------------------------------ */
+
+    if (updates.sales.length) {
+
+        const salesData =
+
+            updates.sales.map(item => [
+
+                item.customerName,
+
+                item.customerId,
+
+                item.value
+
+            ]);
+
+        salesResult =
+
+            await API.updateMilkSalesData(
+
+                App.selectedDate,
+
+                salesData
+
+            );
+
+        if (!salesResult.success) {
+
+            throw new Error(
+
+                salesResult.message ||
+
+                "Unable to save sales."
+
+            );
+
+        }
+
+    }
+
+    /* -----------------------------
+       Dispatch
+    ------------------------------ */
+
+    for (const item of updates.dispatch) {
+
+        const result =
+
+            await API.updateDispatchQty(
+
+                item.date,
+
+                item.value,
+
+                ""
+
+            );
+
+        if (!result.success) {
+
+            throw new Error(
+
+                result.message ||
+
+                "Unable to save dispatch."
+
+            );
+
+        }
+
+    }
+
+    /* -----------------------------
+       Returned Milk
+    ------------------------------ */
+
+    for (const item of updates.returnedMilk) {
+
+        const result =
+
+            await API.updateReturnedMilkQty(
+
+                item.date,
+
+                item.value,
+
+                ""
+
+            );
+
+        if (!result.success) {
+
+            throw new Error(
+
+                result.message ||
+
+                "Unable to save returned milk."
+
+            );
+
+        }
+
+    }
+
+    /* -----------------------------
+       Refresh table
+    ------------------------------ */
+
+    await App.loadMilkData();
+
+    Utils.showToast(
+
+        "Changes saved successfully."
+
+    );
 
 },
 
