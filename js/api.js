@@ -4,34 +4,15 @@ const API = {
 
         try {
 
-            const response =
-                await fetch(
-                    CONFIG.API_URL,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body: JSON.stringify({
-                    
-                        app: "delivery",
-                    
-                        action,
-                    
-                        route:
-                            Storage.get(
-                                CONFIG.STORAGE.ROUTE
-                            ),
-                    
-                        ...data
-                    
-                    })
-
-                    }
-                );
+            const response = await fetch(CONFIG.API_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    app: "delivery",
+                    action,
+                    route: Storage.get(CONFIG.STORAGE.ROUTE),
+                    ...data
+                })
+            });
 
             if (!response.ok) {
 
