@@ -29,8 +29,7 @@ const Table = {
     initialize() {
 
         const content = Utils.$("content");
-
-
+        console.log(content);
 
         content.innerHTML = `
 
@@ -69,6 +68,8 @@ const Table = {
         this.body =
 
             Utils.$("table-body");
+
+        console.log("Table initialized");
 
 
 
@@ -317,24 +318,7 @@ else if (
 
     td.appendChild(input);
 
-}{
-
-                const input =
-                    this.createSalesInput(
-
-                        rowIndex,
-
-                        rowName,
-
-                        cell,
-
-                        cellIndex
-
-                    );
-
-                td.appendChild(input);
-
-            }
+}
 
             else {
 
