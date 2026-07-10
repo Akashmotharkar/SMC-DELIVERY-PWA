@@ -1,0 +1,59 @@
+:root{
+
+    /* Colors */
+
+    --primary:#1565C0;
+    --primary-dark:#0D47A1;
+    --primary-light:#E3F2FD;
+
+    --accent:#2E7D32;
+
+    --background:#F4F6F8;
+    --surface:#FFFFFF;
+
+    --text:#212121;
+    --text-light:#616161;
+
+    --border:#DADCE0;
+
+    --success:#2E7D32;
+    --warning:#EF6C00;
+    --danger:#C62828;
+
+    --shadow:
+        0 4px 12px rgba(0,0,0,.12);
+
+    --radius:12px;
+
+    /* Spacing */
+
+    --space-xs:4px;
+    --space-sm:8px;
+    --space-md:12px;
+    --space-lg:16px;
+    --space-xl:24px;
+
+    /* Toolbar */
+
+    --toolbar-height:60px;
+
+    /* Table */
+
+    --name-column-width:160px;
+    --rate-column-width:70px;
+    --balance-column-width:80px;
+
+    --date-column-width:40px;
+    --active-date-width:150px;
+
+    --row-height:42px;
+
+    /* Floating Button */
+
+    --floating-size:54px;
+
+    /* Animation */
+
+    --transition:.2s ease;
+
+}
