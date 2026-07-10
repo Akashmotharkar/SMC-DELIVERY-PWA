@@ -1270,10 +1270,12 @@ async saveChanges(updates) {
 
     
 
-  setMode(mode) {
+ setMode(mode) {
 
     this.editMode = mode;
 
     App.loadMilkData();
 
 }
+
+};
