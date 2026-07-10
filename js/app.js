@@ -149,6 +149,7 @@ const App = {
         this.selectedDate
 
     );
+                    Table.setMode("sales");
 
 
 
