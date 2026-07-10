@@ -16,17 +16,19 @@ const API = {
                         },
 
                         body: JSON.stringify({
-
-                            action,
-
-                            route:
-                                Storage.get(
-                                    CONFIG.STORAGE.ROUTE
-                                ),
-
-                            ...data
-
-                        })
+                    
+                        app: "delivery",
+                    
+                        action,
+                    
+                        route:
+                            Storage.get(
+                                CONFIG.STORAGE.ROUTE
+                            ),
+                    
+                        ...data
+                    
+                    })
 
                     }
                 );
