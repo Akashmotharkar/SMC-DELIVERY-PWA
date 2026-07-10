@@ -5,7 +5,7 @@ const CONFIG = {
     VERSION: "1.0.0",
 
     API_URL:
-        "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL",
+        "https://script.google.com/macros/s/AKfycbzlICxgwokRn6TSeMphL9-HK8_CXMLDAExseUNvcW0dwwn7tVS9lAdKlHCGoQMd6-8Gtg/exec",
 
     STORAGE_PREFIX:
         "milk_collection_",
