@@ -27,52 +27,38 @@ const Table = {
 
 
     initialize() {
-
+    
+        alert("T1");
+    
+        alert(typeof Utils);
+    
+        alert(typeof Utils.$);
+    
         const content = Utils.$("content");
-        console.log(content);
-
+    
+        alert("T2");
+    
+        alert(content);
+    
         content.innerHTML = `
-
             <div class="table-wrapper">
-
                 <table id="sales-table">
-
                     <thead>
-
                         <tr id="header-row"></tr>
-
                     </thead>
-
                     <tbody id="table-body"></tbody>
-
                 </table>
-
             </div>
-
         `;
-
-
-
-        this.table =
-
-            Utils.$("sales-table");
-
-
-
-        this.headerRow =
-
-            Utils.$("header-row");
-
-
-
-        this.body =
-
-            Utils.$("table-body");
-
-        console.log("Table initialized");
-
-
-
+    
+        alert("T3");
+    
+        this.table = Utils.$("sales-table");
+        this.headerRow = Utils.$("header-row");
+        this.body = Utils.$("table-body");
+    
+        alert("T4");
+    
     },
 
 
