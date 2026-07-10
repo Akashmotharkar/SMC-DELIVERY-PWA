@@ -1,9 +1,5 @@
 const Table = {
 
-    /* ==========================================================
-       STATE
-       ========================================================== */
-
     headers: [],
 
     data: [],
@@ -12,89 +8,53 @@ const Table = {
 
     editMode: null,
 
+    selectedDate: "",
+
     activeInput: null,
 
     yesterdayMap: {},
 
-    selectedDate: "",
-
-    table: null,
-
     headerRow: null,
 
-    body: null,
+    tableBody: null,
 
 
-
-    /* ==========================================================
-       INITIALIZE
-       ========================================================== */
 
     initialize() {
 
-        this.table = document.createElement("table");
+        const content = Utils.$("content");
 
+        content.innerHTML = `
 
+            <div class="table-wrapper">
 
-        const thead = document.createElement("thead");
+                <table id="sales-table">
 
-        this.headerRow = document.createElement("tr");
+                    <thead>
 
-        thead.appendChild(this.headerRow);
+                        <tr id="header-row"></tr>
 
+                    </thead>
 
+                    <tbody id="table-body"></tbody>
 
-        this.body = document.createElement("tbody");
+                </table>
 
+            </div>
 
+        `;
 
-        this.table.appendChild(thead);
+        this.headerRow =
 
-        this.table.appendChild(this.body);
+            Utils.$("header-row");
 
+        this.tableBody =
 
-
-        const wrapper = document.createElement("div");
-
-        wrapper.className = "table-wrapper";
-
-
-
-        wrapper.appendChild(this.table);
-
-
-
-        Utils.$("content").appendChild(wrapper);
+            Utils.$("table-body");
 
     },
 
 
-
-    /* ==========================================================
-       MODE
-       ========================================================== */
-
-    setMode(mode) {
-
-        this.editMode = mode;
-
-        this.render(
-
-            this.headers,
-
-            this.data,
-
-            this.customerIDs
-
-        );
-
-    },
-
-
-
-    /* ==========================================================
-       RENDER
-       ========================================================== */
 
     render(
 
@@ -110,33 +70,23 @@ const Table = {
 
         this.data = data || [];
 
-        this.customerIDs = customerIDs || [];
-
-
+        this.customerIDs =
+            customerIDs || [];
 
         this.selectedDate =
-
             Utils.formatDate(
-
                 App.selectedDate
-
             );
-
-
 
         this.buildHeader();
 
         this.buildRows();
 
-        this.resizeColumns();
+        this.setColumnWidths();
 
     },
 
 
-
-    /* ==========================================================
-       HEADER
-       ========================================================== */
 
     buildHeader() {
 
@@ -152,11 +102,10 @@ const Table = {
 
             "Balance"
 
-        ]
+        ].forEach(text => {
 
-        .forEach(text => {
-
-            const th = document.createElement("th");
+            const th =
+                Utils.create("th");
 
             th.textContent = text;
 
@@ -168,15 +117,19 @@ const Table = {
 
         this.headers.forEach(date => {
 
-            const th = document.createElement("th");
+            const th =
+                Utils.create("th");
 
 
 
             const day =
-
                 parseInt(
 
-                    date.split(" ")[1]
+                    date
+                        .split(" ")[1]
+                        .replace(",", ""),
+
+                    10
 
                 );
 
@@ -202,7 +155,9 @@ const Table = {
 
 
 
-            this.headerRow.appendChild(th);
+            this.headerRow
+
+                .appendChild(th);
 
         });
 
@@ -210,13 +165,9 @@ const Table = {
 
 
 
-    /* ==========================================================
-       BODY
-       ========================================================== */
-
     buildRows() {
 
-        this.body.innerHTML = "";
+        this.tableBody.innerHTML = "";
 
 
 
@@ -231,56 +182,19 @@ const Table = {
             ) => {
 
                 const tr =
+                    this.buildRow(
 
-                    document.createElement(
+                        row,
 
-                        "tr"
+                        rowIndex
 
                     );
 
 
 
-                tr.dataset.rowType =
+                this.tableBody
 
-                    row[0];
-
-
-
-                row.forEach(
-
-                    (
-
-                        cell,
-
-                        colIndex
-
-                    ) => {
-
-                        const td =
-
-                            this.createCell(
-
-                                cell,
-
-                                rowIndex,
-
-                                colIndex,
-
-                                row[0]
-
-                            );
-
-
-
-                        tr.appendChild(td);
-
-                    }
-
-                );
-
-
-
-                this.body.appendChild(tr);
+                    .appendChild(tr);
 
             }
 
@@ -290,31 +204,82 @@ const Table = {
 
 
 
-    /* ==========================================================
-       CELL
-       ========================================================== */
-
-    createCell(
-
-        value,
+    buildRow(
 
         row,
 
-        col,
+        rowIndex
 
-        rowName
+    ) {
+
+        const tr =
+            Utils.create("tr");
+
+
+
+        tr.dataset.rowType =
+            row[0];
+
+
+
+        row.forEach(
+
+            (
+
+                cell,
+
+                cellIndex
+
+            ) => {
+
+                const td =
+                    this.buildCell(
+
+                        row,
+
+                        rowIndex,
+
+                        cell,
+
+                        cellIndex
+
+                    );
+
+
+
+                tr.appendChild(td);
+
+            }
+
+        );
+
+
+
+        return tr;
+
+    },
+
+
+
+    buildCell(
+
+        row,
+
+        rowIndex,
+
+        cell,
+
+        cellIndex
 
     ) {
 
         const td =
-
-            document.createElement("td");
+            Utils.create("td");
 
 
 
         td.textContent =
-
-            value ?? "";
+            cell || "";
 
 
 
@@ -324,31 +289,11 @@ const Table = {
 
 
 
-    /* ==========================================================
-       COLUMN WIDTHS
-       ========================================================== */
-
-    resizeColumns() {
-
-        if (
-
-            !this.headers.length
-
-        ) {
-
-            return;
-
-        }
-
-
+    setColumnWidths() {
 
         const rows =
-
-            this.body.querySelectorAll(
-
-                "tr"
-
-            );
+            this.tableBody
+                .querySelectorAll("tr");
 
 
 
@@ -365,27 +310,26 @@ const Table = {
         ) {
 
             const th =
-
                 this.headerRow.children[c];
 
 
 
             th.style.width =
-
                 "40px";
 
 
 
-            rows.forEach(tr => {
+            rows.forEach(row => {
 
                 if (
 
-                    tr.cells[c]
+                    row.cells[c]
 
                 ) {
 
-                    tr.cells[c].style.width =
+                    row.cells[c]
 
+                        .style.width =
                         "40px";
 
                 }
@@ -396,7 +340,19 @@ const Table = {
 
 
 
-        const active =
+        if (
+
+            !this.selectedDate
+
+        ) {
+
+            return;
+
+        }
+
+
+
+        const index =
 
             this.headers.indexOf(
 
@@ -408,7 +364,7 @@ const Table = {
 
         if (
 
-            active === -1
+            index === -1
 
         ) {
 
@@ -419,31 +375,28 @@ const Table = {
 
 
         const column =
-
-            active + 3;
+            index + 3;
 
 
 
         this.headerRow.children[column]
 
             .style.width =
-
             "150px";
 
 
 
-        rows.forEach(tr => {
+        rows.forEach(row => {
 
             if (
 
-                tr.cells[column]
+                row.cells[column]
 
             ) {
 
-                tr.cells[column]
+                row.cells[column]
 
                     .style.width =
-
                     "150px";
 
             }
