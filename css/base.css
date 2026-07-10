@@ -1,0 +1,196 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    height:100%;
+    font-size:16px;
+    -webkit-text-size-adjust:100%;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background:
+        var(--background);
+
+    color:
+        var(--text);
+
+    overflow:hidden;
+
+    -webkit-font-smoothing:antialiased;
+
+    -moz-osx-font-smoothing:grayscale;
+
+}
+
+button,
+input,
+select{
+
+    font:inherit;
+
+}
+
+button{
+
+    cursor:pointer;
+
+    border:none;
+
+    outline:none;
+
+}
+
+input,
+select{
+
+    outline:none;
+
+    border:1px solid var(--border);
+
+    background:white;
+
+}
+
+.hidden{
+
+    display:none !important;
+
+}
+
+::-webkit-scrollbar{
+
+    width:8px;
+    height:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#BDBDBD;
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+/* Loading Screen */
+
+#loading-screen{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:20px;
+
+    background:white;
+
+    z-index:5000;
+
+}
+
+.loader{
+
+    width:54px;
+
+    height:54px;
+
+    border-radius:50%;
+
+    border:5px solid #E0E0E0;
+
+    border-top-color:
+        var(--primary);
+
+    animation:spin 1s linear infinite;
+
+}
+
+.loading-text{
+
+    color:var(--text-light);
+
+    font-size:15px;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* Toast */
+
+#toast{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:20px;
+
+    transform:translateX(-50%);
+
+    min-width:220px;
+
+    max-width:90%;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    background:#333;
+
+    color:white;
+
+    text-align:center;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:opacity .25s;
+
+    z-index:6000;
+
+}
+
+#toast.show{
+
+    opacity:1;
+
+}
