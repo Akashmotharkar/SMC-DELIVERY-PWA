@@ -29,15 +29,7 @@ const Table = {
 
     initialize() {
     
-        alert("T1");
-    
-        alert("Utils = " + typeof Utils);
-    
-        alert("Utils.$ = " + typeof Utils.$);
-    
         const content = Utils.$("content");
-    
-        alert("content = " + (content ? "FOUND" : "NULL"));
     
         content.innerHTML = `
             <div class="table-wrapper">
@@ -50,17 +42,11 @@ const Table = {
             </div>
         `;
     
-        alert("table = " + (Utils.$("sales-table") ? "FOUND" : "NULL"));
-        alert("header = " + (Utils.$("header-row") ? "FOUND" : "NULL"));
-        alert("body = " + (Utils.$("table-body") ? "FOUND" : "NULL"));
-    
         this.table = Utils.$("sales-table");
         this.headerRow = Utils.$("header-row");
         this.body = Utils.$("table-body");
     
-        alert("T4");
     },
-
 
 
     render(
