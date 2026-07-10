@@ -38,6 +38,8 @@ const App = {
 
     async load() {
 
+        Table.initialize();
+
         this.restoreDate();
 
         this.buildToolbar();
