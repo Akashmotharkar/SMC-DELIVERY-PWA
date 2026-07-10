@@ -271,7 +271,6 @@ else if (
         active: activeDate,
         summary: isSummary
     });
-{
 
     const input =
 
