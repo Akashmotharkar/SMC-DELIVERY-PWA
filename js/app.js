@@ -28,6 +28,8 @@ const App = {
 
         UI.initialize();
 
+        Table.initialize();
+
         await Auth.autoLogin();
 
     },
