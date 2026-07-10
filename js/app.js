@@ -260,6 +260,7 @@ Table.render(
     this.customerIDs
 
 );
+        Table.updateSummaryRows();
 
     }
 
