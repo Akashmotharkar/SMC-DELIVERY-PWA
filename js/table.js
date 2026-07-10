@@ -77,56 +77,34 @@ const Table = {
 
 
     render(
+    headers,
+    data,
+    customerIDs
+) {
 
-        headers,
+    this.headers = headers || [];
 
-        data,
+    this.data = data || [];
 
-        customerIDs
+    this.customerIDs = customerIDs || [];
 
-    ) {
+    if (!this.table) {
 
-        this.headers =
+        this.initialize();
 
-            headers || [];
+    }
 
+    this.buildYesterdayMap();
 
+    this.headerRow.innerHTML = "";
 
-        this.data =
+    this.body.innerHTML = "";
 
-            data || [];
+    this.buildHeader();
 
+    this.buildRows();
 
-
-        this.customerIDs =
-
-            customerIDs || [];
-
-
-
-        if (!this.table) {
-
-            this.initialize();
-
-        }
-
-
-
-        this.headerRow.innerHTML = "";
-
-
-
-        this.body.innerHTML = "";
-
-
-
-        this.buildHeader();
-
-
-
-        this.buildRows();
-
-    },
+},
 
 
 
@@ -329,6 +307,87 @@ const Table = {
 },
 
 
+buildYesterdayMap() {
+
+    this.customerYesterdayMap = {};
+
+    if (
+
+        !App.selectedDateText ||
+
+        this.headers.length === 0
+
+    ) {
+
+        return;
+
+    }
+
+    const selected =
+
+        new Date(App.selectedDate);
+
+    const yesterday =
+
+        new Date(selected);
+
+    yesterday.setDate(
+
+        yesterday.getDate() - 1
+
+    );
+
+    this.yesterdayDateStr =
+
+        Utils.formatDate(yesterday);
+
+    const yesterdayColumn =
+
+        this.headers.indexOf(
+
+            this.yesterdayDateStr
+
+        );
+
+    if (yesterdayColumn === -1) {
+
+        return;
+
+    }
+
+    this.data
+
+        .slice(4)
+
+        .forEach((row, index) => {
+
+            const value =
+
+                row[3 + yesterdayColumn];
+
+            if (
+
+                value !== "" &&
+
+                value !== null &&
+
+                value !== undefined
+
+            ) {
+
+                this.customerYesterdayMap[
+
+                    this.customerIDs[index]
+
+                ] = String(value);
+
+            }
+
+        });
+
+},
+
+
 createSalesInput(
 
     rowIndex,
@@ -392,6 +451,18 @@ createSalesInput(
 
     );
 
+    input.addEventListener(
+    "input",
+    e => this.updateLiveSummary(
+        e.target.parentElement.cellIndex
+    )
+);
+
+input.addEventListener(
+    "keydown",
+    e => this.onInputKeyDown(e)
+);
+
     return input;
 
 },
@@ -401,7 +472,40 @@ onInputFocus(e) {
 
     this.activeInput = e.target;
 
+    if (
+
+        e.target.dataset.type === "sales"
+
+    ) {
+
+        const customerId =
+
+            e.target.dataset.customerId;
+
+        if (
+
+            e.target.value === "" &&
+
+            this.customerYesterdayMap[customerId]
+
+        ) {
+
+            e.target.value =
+
+                this.customerYesterdayMap[customerId];
+
+            this.updateLiveSummary(
+
+                e.target.parentElement.cellIndex
+
+            );
+
+        }
+
+    }
+
     const rect =
+
         e.target.getBoundingClientRect();
 
     UI.showFloatingButton(
@@ -445,6 +549,146 @@ onInputFocus(e) {
     e.target.select();
 
 },
+
+
+onInputKeyDown(e) {
+
+    if (e.key !== "Enter") {
+
+        return;
+
+    }
+
+    e.preventDefault();
+
+    const inputs =
+
+        Array.from(
+
+            this.body.querySelectorAll(
+
+                'input[type="number"]'
+
+            )
+
+        );
+
+    const index =
+
+        inputs.indexOf(e.target);
+
+    if (
+
+        index >= 0 &&
+
+        index < inputs.length - 1
+
+    ) {
+
+        inputs[index + 1].focus();
+
+    }
+
+},
+
+
+updateLiveSummary(column) {
+
+    const rows =
+
+        this.body.querySelectorAll("tr");
+
+    if (rows.length < 4) {
+
+        return;
+
+    }
+
+    const totalRow =
+        rows[0];
+
+    const dispatchRow =
+        rows[1];
+
+    const returnedRow =
+        rows[2];
+
+    const differenceRow =
+        rows[3];
+
+    let total = 0;
+
+    for (
+
+        let r = 4;
+
+        r < rows.length;
+
+        r++
+
+    ) {
+
+        const input =
+
+            rows[r]
+                .cells[column]
+                ?.querySelector("input");
+
+        const value =
+
+            input
+                ? Number(input.value) || 0
+                : Number(
+                    rows[r]
+                        .cells[column]
+                        .textContent
+                  ) || 0;
+
+        total += value;
+
+    }
+
+    totalRow.cells[column].textContent =
+        total;
+
+    const dispatchInput =
+
+        dispatchRow
+            .cells[column]
+            ?.querySelector("input");
+
+    const dispatch =
+
+        dispatchInput
+            ? Number(dispatchInput.value) || 0
+            : Number(
+                dispatchRow
+                    .cells[column]
+                    .textContent
+              ) || 0;
+
+    const returnedInput =
+
+        returnedRow
+            .cells[column]
+            ?.querySelector("input");
+
+    const returned =
+
+        returnedInput
+            ? Number(returnedInput.value) || 0
+            : Number(
+                returnedRow
+                    .cells[column]
+                    .textContent
+              ) || 0;
+
+    differenceRow.cells[column].textContent =
+
+        (total + returned) - dispatch;
+
+},
+    
 
 
 setEditableColumnWidth() {
@@ -538,6 +782,27 @@ setEditableColumnWidth() {
             "150px";
 
     });
+
+},
+
+
+updateSummaryRows() {
+
+    for (
+
+        let column = 3;
+
+        column <
+
+        this.headerRow.children.length;
+
+        column++
+
+    ) {
+
+        this.updateLiveSummary(column);
+
+    }
 
 },
 
