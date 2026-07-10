@@ -26,30 +26,30 @@ const Auth = {
 
     },
 
-
-
-    populateRoutes() {
-
-    const select =
-        Utils.$("route-select");
-
-    select.innerHTML =
-        '<option value="">Select Delivery Path</option>';
-
-    Object.entries(CONFIG.ROUTES).forEach(([id, route]) => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = id;
-
-        option.textContent = route.name;
-
-        select.appendChild(option);
-
-    });
-
-},
+    
+    
+        populateRoutes() {
+    
+        const select =
+            Utils.$("route-select");
+    
+        select.innerHTML =
+            '<option value="">Select Delivery Path</option>';
+    
+        CONFIG.ROUTES.forEach(route => {
+    
+            const option =
+                document.createElement("option");
+    
+            option.value = route.id;
+    
+            option.textContent = route.name;
+    
+            select.appendChild(option);
+    
+        });
+    
+    },
 
 
 
