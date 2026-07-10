@@ -12,37 +12,21 @@ const App = {
 
     data: [],
 
-    async initialize() {
-
-    alert("1");
+async initialize() {
 
     if (this.initialized) return;
 
     this.initialized = true;
 
-    alert("2");
-
     Utils.showLoading();
-
-    alert("3");
 
     Auth.initialize();
 
-    alert("4");
-
     UI.initialize();
-
-    alert("5");
-
-    alert(typeof Table);
 
     Table.initialize();
 
-    alert("6");
-
     await Auth.autoLogin();
-
-    alert("7");
 
 },
 
