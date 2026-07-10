@@ -26,6 +26,8 @@ const App = {
 
         Auth.initialize();
 
+        UI.initialize();
+
         await Auth.autoLogin();
 
     },
