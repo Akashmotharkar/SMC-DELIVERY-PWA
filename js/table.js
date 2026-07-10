@@ -806,6 +806,176 @@ updateSummaryRows() {
 
 },
 
+
+
+collectChanges() {
+
+    const updates = {
+
+        sales: [],
+
+        dispatch: [],
+
+        returnedMilk: [],
+
+        rates: [],
+
+        balances: []
+
+    };
+
+    const inputs =
+
+        this.body.querySelectorAll(
+
+            'input[type="number"]'
+
+        );
+
+    inputs.forEach(input => {
+
+        const current =
+
+            input.value.trim();
+
+        const original =
+
+            input.defaultValue.trim();
+
+        if (current === original) {
+
+            return;
+
+        }
+
+        switch (input.dataset.type) {
+
+            case "sales":
+
+                updates.sales.push({
+
+                    customerId:
+
+                        input.dataset.customerId,
+
+                    customerName:
+
+                        input.dataset.customerName,
+
+                    value: current
+
+                });
+
+                break;
+
+            case "dispatch":
+
+                updates.dispatch.push({
+
+                    date:
+
+                        input.dataset.dispatchDate,
+
+                    value: current
+
+                });
+
+                break;
+
+            case "returnedMilk":
+
+                updates.returnedMilk.push({
+
+                    date:
+
+                        input.dataset.returnDate,
+
+                    value: current
+
+                });
+
+                break;
+
+        }
+
+    });
+
+    return updates;
+
+},
+
+
+hasChanges(updates) {
+
+    return (
+
+        updates.sales.length ||
+
+        updates.dispatch.length ||
+
+        updates.returnedMilk.length ||
+
+        updates.rates.length ||
+
+        updates.balances.length
+
+    );
+
+},
+
+
+
+async submit() {
+
+    const updates =
+
+        this.collectChanges();
+
+    if (
+
+        !this.hasChanges(updates)
+
+    ) {
+
+        Utils.showToast(
+
+            "No changes detected."
+
+        );
+
+        return;
+
+    }
+
+    Utils.showToast(
+
+        "Saving...",
+
+        0
+
+    );
+
+    try {
+
+        await this.saveChanges(updates);
+
+    }
+
+    finally {
+
+        Utils.hideToast();
+
+    }
+
+},
+
+
+async saveChanges(updates) {
+
+    // Part 9
+
+},
+
     
 
   setMode(mode) {
