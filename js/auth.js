@@ -30,28 +30,26 @@ const Auth = {
 
     populateRoutes() {
 
-        const select =
-            Utils.$("route-select");
+    const select =
+        Utils.$("route-select");
 
-        select.innerHTML =
-            '<option value="">Select Delivery Path</option>';
+    select.innerHTML =
+        '<option value="">Select Delivery Path</option>';
 
-        CONFIG.ROUTES.forEach(route => {
+    Object.entries(CONFIG.ROUTES).forEach(([id, route]) => {
 
-            const option =
-                document.createElement("option");
+        const option =
+            document.createElement("option");
 
-            option.value =
-                route.id;
+        option.value = id;
 
-            option.textContent =
-                route.name;
+        option.textContent = route.name;
 
-            select.appendChild(option);
+        select.appendChild(option);
 
-        });
+    });
 
-    },
+},
 
 
 
