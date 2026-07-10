@@ -34,6 +34,8 @@ const App = {
 
     alert("5");
 
+    alert(typeof Table);
+
     Table.initialize();
 
     alert("6");
