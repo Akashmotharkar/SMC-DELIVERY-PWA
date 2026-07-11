@@ -426,7 +426,7 @@ addDateColumnLocally(dateText) {
 
     });
 
-}
+},
 
 
 
