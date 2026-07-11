@@ -144,7 +144,7 @@
 
     align-items:center;
 
-    justify-content:space-between;
+    gap:8px;
 
     padding:0 12px;
 
@@ -153,6 +153,29 @@
     box-shadow:0 2px 8px rgba(0,0,0,.12);
 
     z-index:100;
+
+}
+
+#toolbar-title{
+
+    white-space:nowrap;
+
+    font-weight:600;
+
+}
+
+
+#date-picker{
+
+    flex:1;
+
+}
+
+#save-button{
+
+    width:auto;
+
+    padding:0 16px;
 
 }
 
