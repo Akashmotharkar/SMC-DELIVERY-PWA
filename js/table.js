@@ -401,6 +401,35 @@ buildYesterdayMap() {
 },
 
 
+
+addDateColumnLocally(dateText) {
+
+    if (this.headers.includes(dateText)) {
+        return;
+    }
+
+    const newDate = new Date(dateText);
+
+    let insertIndex = this.headers.findIndex(header =>
+        new Date(header) > newDate
+    );
+
+    if (insertIndex === -1) {
+        insertIndex = this.headers.length;
+    }
+
+    this.headers.splice(insertIndex, 0, dateText);
+
+    this.data.forEach(row => {
+
+        row.splice(insertIndex + 3, 0, "");
+
+    });
+
+}
+
+
+
 createRateBalanceInput(
 
     value,
