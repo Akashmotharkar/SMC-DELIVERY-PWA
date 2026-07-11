@@ -568,46 +568,32 @@ onInputFocus(e) {
     }
 
     const rect =
-
-        e.target.getBoundingClientRect();
-
-    UI.showFloatingButton(
-
-        rect.bottom +
-
-        window.scrollY +
-
-        8,
-
-        rect.left +
-
-        window.scrollX
-
-    );
-
-    if (
-
-        e.target.dataset.type === "sales"
-
-    ) {
-
-        UI.showCustomerName(
-
-            e.target.dataset.customerName,
-
-            rect.top +
-
-            window.scrollY -
-
-            34,
-
-            rect.left +
-
-            window.scrollX
-
-        );
-
-    }
+        
+            e.target.getBoundingClientRect();
+        
+        if (
+        
+            e.target.dataset.type === "sales"
+        
+        ) {
+        
+            UI.showCustomerName(
+        
+                e.target.dataset.customerName,
+        
+                rect.top +
+        
+                window.scrollY -
+        
+                34,
+        
+                rect.left +
+        
+                window.scrollX
+        
+            );
+        
+        }
 
     e.target.select();
 
