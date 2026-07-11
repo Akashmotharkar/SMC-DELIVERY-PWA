@@ -95,33 +95,20 @@ async initialize() {
 
         toolbar.innerHTML = `
 
-            <button
-
-                id="menu-button"
-
-                class="btn">
-
-                ☰
-
-            </button>
-
-
-
-            <div>
-
-                ${CONFIG.APP_NAME}
-
-            </div>
-
-
-
+            <button id="menu-button" class="btn">☰</button>
+            
+            <div>${CONFIG.APP_NAME}</div>
+            
             <input
-
                 id="date-picker"
-
                 type="date"
-
                 value="${this.selectedDate}">
+            
+            <button
+                id="save-button"
+                class="btn">
+                Save
+            </button>
 
         `;
 
@@ -179,6 +166,12 @@ async initialize() {
 
                 }
 
+            );
+
+        Utils.$("save-button")
+            .addEventListener(
+                "click",
+                () => Table.submit()
             );
 
     },
