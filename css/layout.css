@@ -213,28 +213,6 @@
    FLOATING BUTTON
    ========================================================== */
 
-#floating-submit{
-
-    position:absolute;
-
-    z-index:3000;
-
-    min-width:120px;
-
-    height:42px;
-
-    border-radius:24px;
-
-    background:var(--primary);
-
-    color:white;
-
-    font-weight:600;
-
-    box-shadow:var(--shadow);
-
-}
-
 #floating-customer-name{
 
     position:absolute;
