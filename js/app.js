@@ -239,6 +239,20 @@ async initialize() {
 
             response.data || [];
 
+        if (!this.headers.includes(this.selectedDateText)) {
+
+            Table.headers = this.headers;
+        
+            Table.data = this.data;
+        
+            Table.addDateColumnLocally(this.selectedDateText);
+        
+            this.headers = Table.headers;
+        
+            this.data = Table.data;
+        
+        }
+
 
 
         if (!Table.table) {
