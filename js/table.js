@@ -135,27 +135,14 @@ const Table = {
 
                 : day;
 
-
-
         if (
-
             Utils.formatDate(
-
                 App.selectedDate
-
             ) === date
-
         ) {
-
-            th.classList.add(
-
-                "active-date-cell"
-
-            );
-
+            // Keep the header blue.
+            // Only body cells will be highlighted.
         }
-
-
 
         this.headerRow.appendChild(th);
 
