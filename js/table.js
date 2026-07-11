@@ -11,8 +11,6 @@ const Table = {
 
     activeInput: null,
 
-    floatingSubmit: null,
-
     floatingCustomerName: null,
 
     customerYesterdayMap: {},
