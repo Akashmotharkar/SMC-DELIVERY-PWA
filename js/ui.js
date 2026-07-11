@@ -10,22 +10,8 @@ const UI = {
 
         this.createBottomSheet();
 
-        this.floatingButton =
-            Utils.$("floating-submit");
-
         this.floatingName =
             Utils.$("floating-customer-name");
-
-        this.floatingButton
-    .addEventListener(
-        "click",
-        () => {
-
-            Table.submit();
-
-        }
-    );
-
     },
 
 
@@ -160,34 +146,6 @@ const UI = {
     closeMenu() {
 
         this.menu.classList.remove("show");
-
-    },
-
-
-
-    showFloatingButton(top, left) {
-
-        this.floatingButton.style.top =
-            top + "px";
-
-        this.floatingButton.style.left =
-            left + "px";
-
-        this.floatingButton.classList.remove(
-            "hidden"
-        );
-
-    },
-
-
-
-    hideFloatingButton() {
-
-        this.floatingButton.classList.add(
-            "hidden"
-        );
-
-        this.hideCustomerName();
 
     },
 
