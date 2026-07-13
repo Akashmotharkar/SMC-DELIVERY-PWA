@@ -1274,13 +1274,25 @@ async saveChanges(updates) {
        Refresh table
     ------------------------------ */
 
-    await App.loadMilkData();
+    if (
 
-    Utils.showToast(
-
-        "Changes saved successfully."
-
-    );
+            this.editMode === "rate" ||
+        
+            this.editMode === "balance"
+        
+        ) {
+        
+            this.editMode = "sales";
+        
+        }
+        
+        await App.loadMilkData();
+        
+        Utils.showToast(
+        
+            "Changes saved successfully."
+        
+        );
 
 },
 
