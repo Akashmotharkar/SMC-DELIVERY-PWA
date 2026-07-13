@@ -15,6 +15,11 @@ const UI = {
 
 
     createBottomSheet() {
+        if (this.menu) {
+        
+            this.menu.remove();
+        
+        }
 
         const sheet =
             document.createElement("div");
