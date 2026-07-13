@@ -132,7 +132,7 @@ async initialize() {
         this.selectedDate
 
     );
-                    Table.setMode("sales");
+                    
 
 
 
