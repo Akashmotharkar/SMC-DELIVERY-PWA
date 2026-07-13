@@ -170,11 +170,23 @@ td input{
 
     height:36px;
 
+    padding:0;
+
+    margin:0;
+
+    box-sizing:border-box;
+
     border:none;
 
     text-align:center;
 
     background:transparent;
+
+}
+
+td input[type="number"]{
+
+    min-width:0;
 
 }
 
