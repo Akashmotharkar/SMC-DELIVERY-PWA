@@ -2,8 +2,6 @@ const UI = {
 
     menu: null,
 
-    floatingButton: null,
-
     floatingName: null,
 
     initialize() {
