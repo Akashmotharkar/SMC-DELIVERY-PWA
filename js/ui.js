@@ -27,38 +27,49 @@ const UI = {
 
 
 
+        const user = Auth.getUser();
+        
+        const isAdmin =
+            user.role === "Admin";
+        
         sheet.innerHTML = `
-
-            <button
-                id="menu-generate"
-                class="btn">
-                Generate Monthly Bills
-            </button>
-
-            <button
-                id="menu-rate"
-                class="btn secondary">
-                Edit Rate
-            </button>
-
-            <button
-                id="menu-balance"
-                class="btn secondary">
-                Edit Balance
-            </button>
-
+        
+            ${
+                isAdmin
+                ? `
+                <button
+                    id="menu-generate"
+                    class="btn">
+                    Generate Monthly Bills
+                </button>
+        
+                <button
+                    id="menu-rate"
+                    class="btn secondary">
+                    Edit Rate
+                </button>
+        
+                <button
+                    id="menu-balance"
+                    class="btn secondary">
+                    Edit Balance
+                </button>
+                `
+                : ""
+            }
+        
             <button
                 id="menu-logout"
                 class="btn danger">
                 Logout
             </button>
-
+        
             <button
                 id="menu-close"
                 class="btn secondary">
                 Close
             </button>
-
+        
         `;
 
 
@@ -91,6 +102,8 @@ const UI = {
 
 
 
+        if (Utils.$("menu-rate")) {
+        
         Utils.$("menu-rate")
             .addEventListener(
                 "click",
@@ -102,34 +115,42 @@ const UI = {
 
                 }
             );
+            }
 
 
 
-        Utils.$("menu-balance")
-            .addEventListener(
-                "click",
-                () => {
+        if (Utils.$("menu-balance")) {
 
-                    this.closeMenu();
+    Utils.$("menu-balance")
+        .addEventListener(
+            "click",
+            () => {
 
-                    Table.setMode("balance");
+                this.closeMenu();
 
-                }
-            );
+                Table.setMode("balance");
+
+            }
+        );
+
+}
 
 
+if (Utils.$("menu-generate")) {
 
-        Utils.$("menu-generate")
-            .addEventListener(
-                "click",
-                () => {
+    Utils.$("menu-generate")
+        .addEventListener(
+            "click",
+            () => {
 
-                    this.closeMenu();
+                this.closeMenu();
 
-                    Billing.open();
+                Billing.open();
 
-                }
-            );
+            }
+        );
+
+}
 
     },
 
