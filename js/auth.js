@@ -170,7 +170,10 @@ const Auth = {
         Utils.$("app-screen")
             .classList
             .remove("hidden");
-
+        
+        // Rebuild menu now that the user is known.
+        UI.createBottomSheet();
+        
         App.load();
 
     },
