@@ -1245,6 +1245,21 @@ async saveChanges(updates) {
 
  setMode(mode) {
 
+    const user = Auth.getUser();
+
+    if (
+        user.role === "Operator" &&
+        (mode === "rate" || mode === "balance")
+    ) {
+
+        Utils.showToast(
+            "Access denied."
+        );
+
+        return;
+
+    }
+
     this.editMode = mode;
 
     App.loadMilkData();
