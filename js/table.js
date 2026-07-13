@@ -301,8 +301,14 @@ else if (
     });
 
     this.setEditableColumnWidth();
-
-},
+    
+    setTimeout(() => {
+    
+        this.scrollToSelectedDateColumn();
+    
+    }, 0);
+    
+    },
 
 
 buildYesterdayMap() {
@@ -831,6 +837,43 @@ setEditableColumnWidth() {
     });
 
 },
+
+
+
+scrollToSelectedDateColumn() {
+
+    const index =
+        this.headers.indexOf(
+            App.selectedDateText
+        );
+
+    if (index === -1) {
+
+        return;
+
+    }
+
+    const column =
+        this.headerRow.children[index + 3];
+
+    if (!column) {
+
+        return;
+
+    }
+
+    column.scrollIntoView({
+
+        behavior: "instant",
+
+        inline: "center",
+
+        block: "nearest"
+
+    });
+
+},
+    
 
 
 updateSummaryRows() {
