@@ -73,21 +73,18 @@ const Billing = {
             Utils.hideToast();
 
             if (
-
                 !result ||
-
                 !result.success
-
             ) {
-
+            
+                console.log(result);
+            
                 Utils.showToast(
-
-                    "PDF generation failed."
-
+                    result.message || "PDF generation failed."
                 );
-
+            
                 return;
-
+            
             }
 
             const a =
