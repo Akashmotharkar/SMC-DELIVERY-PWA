@@ -166,6 +166,11 @@ const Auth = {
         CONFIG.APP_NAME =
             result.sheetName ||
             CONFIG.APP_NAME;
+        
+        Storage.set(
+            CONFIG.STORAGE.SHEET_NAME,
+            CONFIG.APP_NAME
+        );
 
         Utils.$("login-screen")
             .classList
