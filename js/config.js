@@ -44,16 +44,18 @@ const CONFIG = {
        LOCAL STORAGE KEYS
        ========================================== */
 
-    STORAGE: {
+   STORAGE: {
 
         ROUTE: "route",
-
+    
         PIN: "pin",
-
+    
         USER: "user",
-
-        DATE: "selected_date"
-
+    
+        DATE: "selected_date",
+    
+        SHEET_NAME: "sheet_name"
+    
     },
 
 
