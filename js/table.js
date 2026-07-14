@@ -1289,31 +1289,39 @@ async saveChanges(updates) {
     /* -----------------------------
        Refresh table
     ------------------------------ */
-    if (salesResult) {
-        
-            await API.sendSingleSummary(
-        
-                App.selectedDate,
-        
-                salesResult.changes,
-        
-                salesResult.oldTotalSales,
-        
-                salesResult.totalSales,
-        
-                dispatchResult.oldQty,
-        
-                dispatchResult.newQty,
-        
-                returnedResult.oldQty,
-        
-                returnedResult.newQty,
-        
-                salesResult.isNewDate
-        
-            );
-        
-        }
+    if (
+    
+        salesResult ||
+    
+        updates.dispatch.length ||
+    
+        updates.returnedMilk.length
+    
+    ) {
+    
+        await API.sendSingleSummary(
+    
+            App.selectedDate,
+    
+            salesResult ? salesResult.changes : [],
+    
+            salesResult ? salesResult.oldTotalSales : 0,
+    
+            salesResult ? salesResult.totalSales : 0,
+    
+            dispatchResult.oldQty,
+    
+            dispatchResult.newQty,
+    
+            returnedResult.oldQty,
+    
+            returnedResult.newQty,
+    
+            salesResult ? salesResult.isNewDate : false
+    
+        );
+    
+    }
 
     if (
 
