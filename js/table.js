@@ -1095,6 +1095,22 @@ async submit() {
 async saveChanges(updates) {
 
     let salesResult = null;
+        
+        let dispatchResult = {
+        
+            oldQty: 0,
+        
+            newQty: 0
+        
+        };
+        
+        let returnedResult = {
+        
+            oldQty: 0,
+        
+            newQty: 0
+        
+        };
 
     /* -----------------------------
            Rate
@@ -1211,68 +1227,93 @@ async saveChanges(updates) {
     ------------------------------ */
 
     for (const item of updates.dispatch) {
-
-        const result =
-
-            await API.updateDispatchQty(
-
-                item.date,
-
-                item.value,
-
-                ""
-
-            );
-
-        if (!result.success) {
-
-            throw new Error(
-
-                result.message ||
-
-                "Unable to save dispatch."
-
-            );
-
+        
+            dispatchResult =
+        
+                await API.updateDispatchQty(
+        
+                    item.date,
+        
+                    item.value,
+        
+                    ""
+        
+                );
+        
+            if (!dispatchResult.success) {
+        
+                throw new Error(
+        
+                    dispatchResult.message ||
+        
+                    "Unable to save dispatch."
+        
+                );
+        
+            }
+        
         }
-
-    }
 
     /* -----------------------------
        Returned Milk
     ------------------------------ */
 
     for (const item of updates.returnedMilk) {
-
-        const result =
-
+    
+        returnedResult =
+    
             await API.updateReturnedMilkQty(
-
+    
                 item.date,
-
+    
                 item.value,
-
+    
                 ""
-
+    
             );
-
-        if (!result.success) {
-
+    
+        if (!returnedResult.success) {
+    
             throw new Error(
-
-                result.message ||
-
+    
+                returnedResult.message ||
+    
                 "Unable to save returned milk."
-
+    
             );
-
+    
         }
-
+    
     }
 
     /* -----------------------------
        Refresh table
     ------------------------------ */
+    if (salesResult) {
+        
+            await API.sendSingleSummary(
+        
+                App.selectedDate,
+        
+                salesResult.changes,
+        
+                salesResult.oldTotalSales,
+        
+                salesResult.totalSales,
+        
+                dispatchResult.oldQty,
+        
+                dispatchResult.newQty,
+        
+                returnedResult.oldQty,
+        
+                returnedResult.newQty,
+        
+                salesResult.isNewDate
+        
+            );
+        
+        }
 
     if (
 
