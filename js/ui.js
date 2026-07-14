@@ -7,9 +7,28 @@ const UI = {
     initialize() {
 
         this.createBottomSheet();
-
+    
         this.floatingName =
             Utils.$("floating-customer-name");
+    
+        document.addEventListener(
+            "click",
+            e => {
+    
+                if (
+                    this.menu &&
+                    this.menu.classList.contains("show") &&
+                    !this.menu.contains(e.target) &&
+                    e.target.id !== "menu-button"
+                ) {
+    
+                    this.closeMenu();
+    
+                }
+    
+            }
+        );
+    
     },
 
 
