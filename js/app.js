@@ -87,6 +87,12 @@ async initialize() {
 
     buildToolbar() {
 
+        CONFIG.APP_NAME =
+            Storage.get(
+                CONFIG.STORAGE.SHEET_NAME,
+                CONFIG.APP_NAME
+            );
+
         const toolbar =
 
             Utils.$("toolbar");
