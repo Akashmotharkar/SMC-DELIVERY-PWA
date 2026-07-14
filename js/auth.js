@@ -163,6 +163,10 @@ const Auth = {
             result.user || {}
         );
 
+        CONFIG.APP_NAME =
+            result.sheetName ||
+            CONFIG.APP_NAME;
+
         Utils.$("login-screen")
             .classList
             .add("hidden");
