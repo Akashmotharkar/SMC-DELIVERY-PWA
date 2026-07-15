@@ -194,13 +194,19 @@ const Auth = {
 
 
 
-    logout() {
+    async logout() {
 
-        Storage.clear();
-
-        location.reload();
-
-    },
+            try {
+        
+                await API.logout();
+        
+            } catch (e) {}
+        
+            Storage.clear();
+        
+            location.reload();
+        
+        },
 
 
 
