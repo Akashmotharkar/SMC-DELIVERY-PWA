@@ -163,6 +163,11 @@ const Auth = {
             result.user || {}
         );
 
+        Storage.set(
+            "SESSION_TOKEN",
+            result.token
+        );
+
         CONFIG.APP_NAME =
             result.sheetName ||
             CONFIG.APP_NAME;
