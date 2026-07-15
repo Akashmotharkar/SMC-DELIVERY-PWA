@@ -10,6 +10,7 @@ const API = {
                     app: "delivery",
                     action,
                     route: Storage.get(CONFIG.STORAGE.ROUTE),
+                    token: Storage.get("SESSION_TOKEN"),
                     ...data
                 })
             });
