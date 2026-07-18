@@ -20,7 +20,7 @@ async initialize() {
 
     Utils.showLoading();
 
-    Auth.initialize();
+    await Auth.initialize();
 
     UI.initialize();
 
