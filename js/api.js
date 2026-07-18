@@ -67,6 +67,16 @@ const API = {
 
     },
 
+
+    getRoutes() {
+    
+        return this.request(
+            "getRoutes"
+        );
+    
+    },
+    
+
     logout() {
 
         return this.request(
