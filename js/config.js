@@ -15,29 +15,7 @@ const CONFIG = {
        DELIVERY ROUTES
        ========================================== */
 
-    ROUTES: [
-
-        {
-            id: "A",
-            name: "Route A"
-        },
-
-        {
-            id: "B",
-            name: "Route B"
-        },
-
-        {
-            id: "C",
-            name: "Route C"
-        },
-
-        {
-            id: "D",
-            name: "Route D"
-        }
-
-    ],
+    ROUTES: [ ],
 
 
     /* ==========================================
