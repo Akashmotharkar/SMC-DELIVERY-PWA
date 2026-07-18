@@ -140,8 +140,6 @@ const Auth = {
                 pin
             );
 
-        alert(JSON.stringify(result, null, 2));
-
         Utils.hideLoading();
 
         if (!result.success) {
