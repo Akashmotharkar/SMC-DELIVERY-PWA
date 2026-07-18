@@ -1,8 +1,8 @@
 const Auth = {
 
-    initialize() {
+    async initialize() {
 
-        this.populateRoutes();
+        await this.populateRoutes();
 
         Utils.$("login-button")
             .addEventListener(
@@ -28,7 +28,7 @@ const Auth = {
 
     
     
-        populateRoutes() {
+    async populateRoutes() {
     
         const select =
             Utils.$("route-select");
@@ -36,20 +36,35 @@ const Auth = {
         select.innerHTML =
             '<option value="">Select Delivery Path</option>';
     
-        CONFIG.ROUTES.forEach(route => {
+        const result =
+            await API.getRoutes();
+    
+        if (!result.success) {
+    
+            Utils.showToast(
+                "Unable to load routes."
+            );
+    
+            return;
+    
+        }
+    
+        result.routes.forEach(route => {
     
             const option =
                 document.createElement("option");
     
-            option.value = route.id;
+            option.value =
+                route.id;
     
-            option.textContent = route.name;
+            option.textContent =
+                route.name;
     
             select.appendChild(option);
     
         });
     
-    },
+    }
 
 
 
