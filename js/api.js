@@ -31,17 +31,12 @@ const API = {
         }
 
         catch (err) {
-
-            console.error(err);
-
+        
             return {
-
                 success: false,
-
-                message: err.message
-
+                message: "Network Error"
             };
-
+        
         }
 
     },
@@ -271,23 +266,6 @@ const API = {
     /* ==========================================
        DEBUG
        ========================================== */
-
-    saveClientDebugLog(log) {
-
-        return this.request(
-
-            "saveClientDebugLog",
-
-            {
-
-                logText: log
-
-            }
-
-        );
-
-    },
-
 
 
     sendSingleSummary(
