@@ -204,20 +204,14 @@ async initialize() {
 
 
 
-        if (!response.success && response.error) {
+        if (!response.success) {
 
             Utils.showToast(
-
-                response.message ||
-
-                response.error ||
-
-                "Unable to load data."
-
+                "Unable to load data. Please try again."
             );
-
+        
             return;
-
+        
         }
 
 
